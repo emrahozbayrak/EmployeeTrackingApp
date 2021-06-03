@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Client.Mobile.Views.LoginPage">
+    <ContentPage.Content>
+        <Grid>
+            <StackLayout  VerticalOptions="Center" HorizontalOptions="FillAndExpand" Padding="25" Spacing="20">
+                <Entry Text="{Binding UserModel.Username}" Placeholder="Kullanıcı adı" HorizontalOptions="FillAndExpand"/>
+                <Entry Text="{Binding UserModel.Password}" Placeholder="Parola" HorizontalOptions="FillAndExpand"/>
+                <Button Text="Giriş Yap" BackgroundColor="DodgerBlue" CornerRadius="10" TextColor="White" Command="{Binding LoginCommand}" />
+            </StackLayout>
+            <Frame CornerRadius="10" IsVisible="{Binding IsBusy}" 
+                   VerticalOptions="Center" HorizontalOptions="Center"
+                   BackgroundColor="Gray" Opacity="0.7" >
+                <StackLayout IsVisible="{Binding IsBusy}" Padding="10" >
+                    <ActivityIndicator x:Name="activiy"
+                                   IsRunning="{Binding IsBusy}"
+                                   IsEnabled="{Binding IsBusy}"
+                                   IsVisible="{Binding IsBusy}"
+                                   Color="Red"
+                                   BackgroundColor="Transparent"
+                                   VerticalOptions="Center" HorizontalOptions="Center" 
+                                  />
+                    <Label Text="Giriş Yapılıyor..." HorizontalOptions="Center" TextColor="White" />
+                </StackLayout>
+            </Frame>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

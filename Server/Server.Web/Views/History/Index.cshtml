@@ -1,0 +1,60 @@
+﻿@using X.PagedList
+@using X.PagedList.Mvc.Core
+@using X.PagedList.Mvc.Core.Fluent
+@using X.PagedList.Web.Common
+@using Server.Data.Entities
+
+@model IEnumerable<EmployeeHistory>
+
+
+<head>
+    <link href="/css/PagedList.css" rel="stylesheet" type="text/css" />
+</head>
+
+<table class="table  table-striped">
+    <thead class="table thead-dark">
+        <tr>
+            <th class="align-middle" scope="col">Personel</th>
+            <th class="align-middle" scope="col">Durum</th>
+            <th class="align-middle" scope="col">Tarih</th>
+            <th class="align-middle" scope="col" style="width:160px">Konum</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td class="align-middle">@item.Employee.Name @item.Employee.Surname</td>
+                <td class="align-middle">@item.StatusType.StatusName</td>
+                <td class="align-middle">@item.LocationTime</td>
+                <td><button onclick="showInPopup('@Url.Action("ShowMap", "History", new { id = item.Id }, Context.Request.Scheme)','Geçmiş')" class="btn btn-primary btn-sm"><i class="fas fa-map"></i> Haritada Göster</button></td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@(Html.Pager((IPagedList)Model)
+        .Url(page => Url.Action("History", new { Id = Model.First().Id, page = page }))
+        .DisplayLinkToFirstPage (PagedListDisplayMode.IfNeeded)
+        .DisplayLinkToLastPage(PagedListDisplayMode.IfNeeded)
+        .DisplayLinkToPreviousPage()
+        .DisplayLinkToNextPage()
+        .MaximumPageNumbersToDisplay(10)
+        .Build())
+
+
+<div class="modal" tabindex="-1" role="dialog" id="form-modal">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+            </div>
+        </div>
+    </div>
+</div>

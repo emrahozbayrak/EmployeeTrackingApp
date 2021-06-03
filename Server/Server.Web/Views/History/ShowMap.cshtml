@@ -1,0 +1,73 @@
+﻿@using Server.Data.Entities
+
+@model EmployeeHistory
+
+@{ Layout = null; }
+
+<script type='text/javascript'>
+
+    //Get Api Key https://www.bingmapsportal.com/
+    function loadMapScenario() {
+        var map = new Microsoft.Maps.Map(document.getElementById('myMap'), {
+            credentials: 'ApiKey',
+            mapTypeId: Microsoft.Maps.MapTypeId.road,
+            center: new Microsoft.Maps.Location(@Model.Latitude, @Model.Longitude),
+            zoom: 10
+        });
+
+        // Create the infobox for the pushpin
+        var infobox = null;
+
+        //declare addMarker function
+        function addMarker(latitude, longitude, title, description, pid)
+        {
+            var marker = new Microsoft.Maps.Pushpin(new Microsoft.Maps.Location(latitude, longitude), { color: 'green' });
+
+            infobox = new Microsoft.Maps.Infobox(marker.getLocation(), {
+                visible : true
+            });
+
+            marker.metadata = {
+                id: pid,
+                title: title,
+                description: description
+            };
+
+            Microsoft.Maps.Events.addHandler(marker, 'mouseout', hideInfobox);
+            Microsoft.Maps.Events.addHandler(marker, 'mouseover', showInfobox);
+
+            infobox.setMap(map);
+            map.entities.push(marker);
+            marker.setOptions({ enableHoverStyle: true });
+        };
+
+        function showInfobox(e) {
+            if (e.target.metadata) {
+                infobox.setOptions({
+                    location: e.target.getLocation(),
+                    title: e.target.metadata.title,
+                    description: e.target.metadata.description,
+                    visible: true
+                });
+            }
+        }
+
+        function hideInfobox(e) {
+            infobox.setOptions({ visible: true });
+        }
+
+        addMarker(@Model.Latitude, @Model.Longitude, '@Model.Employee.Name', 'Açıklama', 1);
+
+    }
+</script>
+<script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?branch=release&callback=loadMapScenario' async defer></script>
+
+@*<div class="jumbotron">
+        <h2>MAP INTEGRATION</h2>
+    </div>*@
+
+<div class="row">
+    <div class="col-md-12 map">
+        <div id="myMap" style="width:100%; height:610px;"></div>
+    </div>
+</div>

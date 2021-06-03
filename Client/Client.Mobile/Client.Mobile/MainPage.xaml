@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Client.Mobile.MainPage">
+
+    <Grid>
+    <StackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="40">
+        <Button Text="Mesaiye Başladım"
+                Command="{Binding SendCommand}" CommandParameter="0"
+                BackgroundColor="DodgerBlue" 
+                CornerRadius="10" 
+                TextColor="White"
+                HeightRequest="100"/>
+        <Button Text="Mesaiyi Tamamladım"
+                Command="{Binding SendCommand}" CommandParameter="1"
+                BackgroundColor="ForestGreen" 
+                CornerRadius="10" 
+                TextColor="White"
+                HeightRequest="100"/>
+        <Button Text="İzinliyim"
+                Command="{Binding SendCommand}" CommandParameter="2"
+                BackgroundColor="Red" 
+                CornerRadius="10" 
+                TextColor="White"
+                HeightRequest="100"/>
+    </StackLayout>
+        <Frame CornerRadius="10" IsVisible="{Binding IsBusy}" 
+                   VerticalOptions="Center" HorizontalOptions="Center"
+                   BackgroundColor="Gray" Opacity="0.8" >
+            <StackLayout IsVisible="{Binding IsBusy}" Padding="10" >
+                <ActivityIndicator x:Name="activiy"
+                                   IsRunning="{Binding IsBusy}"
+                                   IsEnabled="{Binding IsBusy}"
+                                   IsVisible="{Binding IsBusy}"
+                                   Color="Red"
+                                   BackgroundColor="Transparent"
+                                   VerticalOptions="Center" HorizontalOptions="Center" 
+                                  />
+                <Label Text="Lütfen bekleyin..." HorizontalOptions="Center" TextColor="White" />
+            </StackLayout>
+        </Frame>
+    </Grid>
+</ContentPage>

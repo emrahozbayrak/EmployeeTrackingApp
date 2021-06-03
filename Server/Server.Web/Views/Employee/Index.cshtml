@@ -1,0 +1,68 @@
+﻿@using X.PagedList
+@using X.PagedList.Mvc.Core.Fluent
+@using X.PagedList.Web.Common
+@using Server.Core.Models
+
+@model IEnumerable<EmployeeModel>
+
+
+<head>
+    <link href="/css/PagedList.css" rel="stylesheet" type="text/css" />
+</head>
+
+@using (Html.BeginForm())
+{
+    <div class="row justify-content-end" style="padding-right:15px">
+        <div class="form-group mx-sm-3 mb-2">
+            <label for="inputSearch" class="sr-only">Ara</label>
+            <input type="text" class="form-control" id="inputSearch" name="search" placeholder="Ara">
+        </div>
+        <button type="submit" class="btn btn-primary mb-2">Ara</button>
+    </div>
+}
+
+
+<table class="table  table-striped">
+    <thead class="table thead-dark">
+        <tr>
+            <th class="align-middle" scope="col">Adı</th>
+            <th class="align-middle" scope="col">Soyadı</th>
+            <th class="align-middle" scope="col">Telefon</th>
+            <th class="align-middle" scope="col">Kullanıcı Adı</th>
+            <th>
+                <a href="@Url.Action("AddOrEdit","Employee")" class="btn btn-success text-white" style="width:140px">
+                    <i class="fas fa-plus"></i> Yeni
+                </a>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td class="align-middle">@item.Name</td>
+                <td class="align-middle">@item.Surname</td>
+                <td class="align-middle">@item.PhoneNumber</td>
+                <td class="align-middle">@item.MobileUsername</td>
+                <td class="align-middle" style="width:280px">
+                    <a href="@Url.Action("AddOrEdit", "Employee", new { id = item.Id })" class="btn btn-primary btn-sm"><i class="fas fa-pencil-alt"></i> Düzenle</a>
+                    <a href="@Url.Action("Delete", "Employee", new { id = item.Id })" class="btn btn-danger btn-sm delete" style="width:50px">
+                        <i class="fas fa-trash"></i>
+                        Sil
+                    </a>
+                    <a class="btn btn-info btn-sm" href="@Url.Action("Index","History", new { Id = item.Id})" style="width:100px"><i class="fas fa-history"></i> Geçmiş</a>
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@(Html.Pager((IPagedList)Model)
+    .Url(page => Url.Action("Index", new { page }))
+    //.WithPartialView("Paging/_Pager_85")
+    .DisplayLinkToFirstPage (PagedListDisplayMode.IfNeeded)
+    .DisplayLinkToLastPage(PagedListDisplayMode.IfNeeded)
+    .DisplayLinkToPreviousPage()
+    .DisplayLinkToNextPage()
+    .MaximumPageNumbersToDisplay(10)
+    .Build())

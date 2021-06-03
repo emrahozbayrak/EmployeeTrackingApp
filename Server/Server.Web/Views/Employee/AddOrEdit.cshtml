@@ -1,0 +1,50 @@
+﻿@using Server.Core.Models
+
+@model EmployeeModel
+
+@{ 
+    Layout = "_Layout";
+}
+
+<!-- Modal -->
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="AddOrEdit" asp-route-id="@Model.Id">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Name"></label>
+                <input asp-for="Name" class="form-control" required />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Surname"></label>
+                <input asp-for="Surname" class="form-control" />
+                <span asp-validation-for="Surname" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PhoneNumber"></label>
+                <input asp-for="PhoneNumber" class="form-control" id="phone" type="text" />
+                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MobileUsername"></label>
+                <input asp-for="MobileUsername" class="form-control" />
+                <span asp-validation-for="MobileUsername" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MobilePassword"></label>
+                <input asp-for="MobilePassword" class="form-control" type="password" />
+                <span asp-validation-for="MobilePassword" class="text-danger"></span>
+            </div>
+
+            <div style="float:right">
+                <button type="submit" value="Submit" class="btn btn-primary">Kaydet</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    $("#phone").inputmask({ "mask": "(999) 999-9999" });
+</script>
